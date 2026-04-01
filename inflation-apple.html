@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Inflation — Apple</title>
+  <style>
+    /* =========================================================================
+   BASE RESET & VARIABLES
+   ========================================================================= */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #000000;
+      --panel-bg: rgba(255, 255, 255, 0.04);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f5f5f7;
+      --text-muted: #86868b;
+      --text-dim: #424245;
+      --accent: #2997ff;
+      --accent-hover: #3e9fff;
+      --green: #30D158;
+      --red: #FF453A;
+      --yellow: #FFD60A;
+      --radius-lg: 32px;
+      --radius-md: 20px;
+      --radius-sm: 12px;
+      --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-stack);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* =========================================================================
+   GLOBAL ANIMATION UTILS (SCROLL REVEAL)
+   ========================================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      filter: blur(8px);
+      will-change: opacity, transform, filter;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+      filter: blur(0);
+    }
+
+    .d-1 {
+      transition-delay: 0.1s;
+    }
+
+    .d-2 {
+      transition-delay: 0.2s;
+    }
+
+    .d-3 {
+      transition-delay: 0.3s;
+    }
+
+    .d-4 {
+      transition-delay: 0.4s;
+    }
+
+    /* =========================================================================
+   TYPOGRAPHY
+   ========================================================================= */
+    h1 {
+      font-size: clamp(56px, 10vw, 112px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.4) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+    h2.section-title {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      background: linear-gradient(180deg, #FFFFFF 20%, rgba(255, 255, 255, 0.5) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 19px;
+      font-weight: 600;
+      color: #a1a1a6;
+      /* Subtle titanium/silver hint instead of loud blue */
+      letter-spacing: 0.01em;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .section-sub {
+      font-size: clamp(20px, 2.5vw, 24px);
+      font-weight: 500;
+      color: var(--text-muted);
+      line-height: 1.4;
+      letter-spacing: -0.015em;
+      max-width: 680px;
+      margin: 0 auto 80px;
+      text-align: center;
+    }
+
+    /* =========================================================================
+   NAVIGATION
+   ========================================================================= */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      height: 48px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: saturate(180%) blur(24px);
+      -webkit-backdrop-filter: saturate(180%) blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        gap: 20px;
+      }
+    }
+
+    nav span {
+      font-size: 12px;
+      font-weight: 500;
+      color: #f5f5f7;
+      opacity: 0.8;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s;
+    }
+
+    nav span:hover {
+      opacity: 1;
+    }
+
+    nav .nav-icon {
+      font-size: 16px;
+      fill: #f5f5f7;
+      display: flex;
+      align-items: center;
+    }
+
+    /* =========================================================================
+   HERO SECTION
+   ========================================================================= */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 24px 80px;
+      overflow: hidden;
+    }
+
+    .ambient-glow {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      width: 80vw;
+      height: 80vw;
+      max-width: 1000px;
+      max-height: 1000px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(41, 151, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: -1;
+      animation: pulseGlow 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        opacity: 0.6;
+        transform: translate(-50%, -48%) scale(0.95);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -52%) scale(1.05);
+      }
+    }
+
+    .hero-sub {
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 500;
+      color: var(--text-muted);
+      max-width: 700px;
+      line-height: 1.35;
+      margin-bottom: 56px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 980px;
+      padding: 16px 32px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, filter 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--text-main);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background: #fff;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary {
+      background: var(--panel-bg);
+      color: var(--text-main);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--panel-border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* =========================================================================
+   SHARED LAYOUT
+   ========================================================================= */
+    .container {
+      padding: 140px 24px;
+      position: relative;
+    }
+
+    .container-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--panel-border) 20%, var(--panel-border) 80%, transparent);
+    }
+
+    /* GLASS PANEL UTILS */
+    .glass-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: var(--radius-lg);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    /* =========================================================================
+   OVERVIEW - QUOTE
+   ========================================================================= */
+    .quote-box {
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .quote-box p {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text-muted);
+      letter-spacing: -0.02em;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .quote-box p strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* =========================================================================
+   BASKET / INTERACTIVE
+   ========================================================================= */
+    .interactive-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .interactive-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .control-board {
+      padding: 48px 40px;
+    }
+
+    .control-group {
+      margin-bottom: 48px;
+    }
+
+    .control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .control-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .control-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+    }
+
+    /* CUSTOM SLIDER */
+    .apple-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      background-image: linear-gradient(var(--text-main), var(--text-main));
+      background-size: var(--val) 100%;
+      background-repeat: no-repeat;
+      cursor: grab;
+    }
+
+    .apple-slider:active {
+      cursor: grabbing;
+    }
+
+    .apple-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .apple-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 0 4px rgba(255, 255, 255, 0.1);
+    }
+
+    .apple-slider::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .sc-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .sc-val {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+
+    .sc-val.red {
+      color: var(--red);
+    }
+
+    .sc-val.green {
+      color: var(--green);
+    }
+
+    /* Number flash animation */
+    @keyframes numPop {
+      0% {
+        transform: scale(1);
+      }
+
+      40% {
+        transform: scale(1.12);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .num-changed {
+      animation: numPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .basket-view {
+      padding: 24px;
+    }
+
+    .basket-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .basket-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .b-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+    }
+
+    .b-item:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .b-icon {
+      font-size: 32px;
+      line-height: 1;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    .b-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .b-name {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .b-price {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+
+    .b-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 980px;
+      letter-spacing: 0;
+      transition: background 0.4s, color 0.4s;
+      white-space: nowrap;
+    }
+
+    .b-badge.up {
+      background: rgba(255, 69, 58, 0.15);
+      color: var(--red);
+    }
+
+    .b-badge.dn {
+      background: rgba(48, 209, 88, 0.15);
+      color: var(--green);
+    }
+
+    .b-badge.fl {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+    }
+
+    /* =========================================================================
+   BAR CHART HISTORY
+   ========================================================================= */
+    .chart-container {
+      padding: 48px;
+    }
+
+    @media (max-width: 600px) {
+      .chart-container {
+        padding: 32px 16px;
+      }
+    }
+
+    .bars-wrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      height: 300px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--panel-border);
+      position: relative;
+    }
+
+    .bars-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(180deg, transparent, transparent calc(25% - 1px), rgba(255, 255, 255, 0.03) 25%);
+    }
+
+    .bar-col {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      height: 100%;
+      cursor: crosshair;
+      position: relative;
+      z-index: 2;
+    }
+
+    .bar-track {
+      width: 100%;
+      max-width: 48px;
+      border-radius: 6px 6px 0 0;
+      background: var(--panel-bg);
+      height: 0;
+      /* Animated via JS */
+      transition: height 1s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bar-track::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .bar-track.high {
+      background: linear-gradient(180deg, var(--red) 0%, rgba(255, 69, 58, 0.2) 100%);
+    }
+
+    .bar-track.mid {
+      background: linear-gradient(180deg, var(--yellow) 0%, rgba(255, 214, 10, 0.2) 100%);
+    }
+
+    .bar-track.low {
+      background: linear-gradient(180deg, var(--green) 0%, rgba(48, 209, 88, 0.2) 100%);
+    }
+
+    .bar-col:hover .bar-track {
+      filter: brightness(1.3);
+    }
+
+    .bar-col:hover .bar-track::before {
+      opacity: 1;
+    }
+
+    .bar-popup {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(40, 40, 40, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .bar-col:hover .bar-popup {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .bar-labels {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .bar-labels span {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .hist-detail {
+      margin-top: 40px;
+      padding: 32px;
+      background: rgba(41, 151, 255, 0.05);
+      border: 1px solid rgba(41, 151, 255, 0.15);
+      border-radius: var(--radius-md);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s;
+      height: 0;
+      overflow: hidden;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-color: transparent;
+    }
+
+    .hist-detail.on {
+      opacity: 1;
+      transform: none;
+      height: auto;
+      padding-top: 32px;
+      padding-bottom: 32px;
+      border-color: rgba(41, 151, 255, 0.15);
+    }
+
+    .hd-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .hd-body {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* =========================================================================
+   CAUSES ACCORDION / GRID
+   ========================================================================= */
+    .causes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .causes-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cause-card {
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cause-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .cause-card.active {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: none;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .cc-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+      margin-bottom: 24px;
+      font-size: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cc-title {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cc-chevron {
+      font-size: 24px;
+      color: var(--text-dim);
+      transition: transform 0.4s;
+    }
+
+    .cause-card.active .cc-chevron {
+      transform: rotate(180deg);
+      color: var(--text-main);
+    }
+
+    .cc-body {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s, margin-top 0.5s;
+    }
+
+    .cause-card.active .cc-body {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 16px;
+    }
+
+    /* =========================================================================
+   CALCULATOR
+   ========================================================================= */
+    .calc-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 56px 48px;
+    }
+
+    @media(max-width:600px) {
+      .calc-wrapper {
+        padding: 40px 24px;
+      }
+    }
+
+    .calc-toggles {
+      display: flex;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 980px;
+      padding: 6px;
+      margin-bottom: 48px;
+      border: 1px solid var(--panel-border);
+    }
+
+    .calc-tog {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 980px;
+      transition: all 0.3s;
+    }
+
+    .calc-tog.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .calc-inputs {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    @media(max-width: 600px) {
+      .calc-inputs {
+        flex-direction: column;
+      }
+    }
+
+    .c-field {
+      flex: 1;
+      position: relative;
+    }
+
+    .c-field label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .c-field input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0;
+      padding: 8px 0;
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.3s, color 0.3s;
+      font-family: inherit;
+      letter-spacing: -0.02em;
+      -moz-appearance: textfield;
+    }
+
+    .c-field input::-webkit-outer-spin-button,
+    .c-field input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .c-field input:focus {
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .calc-result-box {
+      text-align: center;
+      overflow: visible;
+    }
+
+    .cr-label {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      transition: opacity 0.3s;
+    }
+
+    .cr-val {
+      font-size: clamp(36px, 7vw, 96px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      transition: font-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: block;
+      width: 100%;
+    }
+
+    .cr-note {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      max-width: 500px;
+      margin: 0 auto;
+      transition: opacity 0.3s;
+    }
+
+    /* =========================================================================
+   FOOTER
+   ========================================================================= */
+    footer {
+      padding: 80px 24px;
+      text-align: center;
+      border-top: 1px solid var(--panel-border);
+      background: var(--bg);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .footer-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-legal {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-icon" aria-label="Apple Logo"><svg viewBox="0 0 170 170" width="16" height="16"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.74 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.92.21-9.84-1.96-14.74-6.53-3.13-2.73-7.1-7.43-11.9-14.1-5.25-7.7-9.62-16.77-13.11-27.15-3.49-10.38-5.24-20.51-5.24-30.38 0-14.06 3.52-25.5 10.56-34.33 6.64-8.35 15.34-12.55 26.1-12.55 5.25 0 10.82 1.49 16.7 4.48 5.89 2.99 9.17 4.47 9.88 4.47.81 0 4.1-1.57 9.87-4.7 5.76-3.14 11.28-4.55 16.54-4.23 11.53 1.05 19.98 5.65 25.33 13.79-10.43 6.25-15.53 14.93-15.33 26.04.18 10.74 4.34 19.34 12.52 25.8 2.05 1.63 4.38 3.01 7.02 4.15-1.92 5.56-4.14 11.02-6.68 16.38a9.42 9.42 0 011.02-.95zM118.82 24.51c1.46-6.17.65-12.62-2.42-19.38-6.15 1.54-11.75 4.54-16.82 9-4.8 4.2-7.85 9.77-9.15 16.7 6.46-1.12 12.5-4.04 18.15-8.77 4.67-3.9 8.08-8.91 10.24-15.05.02.06 0 .09 0 1.5z" />
+      </svg></span>
+    <span onclick="document.getElementById('overview').scrollIntoView()">Overview</span>
+    <span onclick="document.getElementById('interactive').scrollIntoView()">Interactive</span>
+    <span onclick="document.getElementById('history').scrollIntoView()">Data</span>
+    <span onclick="document.getElementById('calculator').scrollIntoView()">Calculator</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="ambient-glow"></div>
+    <div class="hero-content reveal">
+      <h1 class="hero-h1">The physics<br>of finance.</h1>
+      <p class="hero-sub reveal d-1">Understand how inflation silently reshapes purchasing power. Visually,
+        interactively, and intuitively.</p>
+      <div class="btn-group reveal d-2">
+        <a href="#overview" class="btn btn-primary">Start exploring</a>
+        <a href="#calculator" class="btn btn-secondary">Try the Calculator</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW QUOTE -->
+  <section id="overview" class="container reveal">
+    <div class="divider"></div>
+    <div class="quote-box">
+      <p class="reveal d-1">"Inflation isn't just a number. It's the rate at which your future money becomes
+        <strong>slightly more fictional</strong> every day."</p>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE BASKET -->
+  <section id="interactive" class="container">
+    <div class="container-inner">
+      <div class="eyebrow reveal">Interactive</div>
+      <h2 class="section-title reveal d-1">Watch prices shift<br>in real time.</h2>
+      <p class="section-sub reveal d-2">Adjust the rate and timeline. See exactly how a typical basket of goods reacts
+        to economic pressure.</p>
+
+      <div class="interactive-layout">
+        <!-- Controls -->
+        <div class="glass-panel control-board reveal d-3">
+          <div class="control-group">
+            <div class="control-header">
+              <span class="control-label">Annual Rate</span>
+              <span class="control-value" id="rateVal">3.0%</span>
+            </div>
+            <input type="range" class="apple-slider" id="rateSlider" min="-10" max="50" step="0.5" value="3">
+          </div>
+          <div class="control-group">
+            <div class="control-header">
+              <span class="control-label">Horizon</span>
+              <span class="control-value" id="yearVal">10 Years</span>
+            </div>
+            <input type="range" class="apple-slider" id="yearSlider" min="1" max="30" step="1" value="10">
+          </div>
+
+          <div class="divider" style="margin: 32px 0;"></div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="sc-label">Today</div>
+              <div class="sc-val" id="costNow">$0</div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-label">Future</div>
+              <div class="sc-val" id="costThen">$0</div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-label" id="deltaLabel">Increase</div>
+              <div class="sc-val" id="costDelta">+$0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Basket View -->
+        <div class="glass-panel basket-view reveal d-4">
+          <div class="basket-grid" id="basketGrid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY CHART -->
+  <section id="history" class="container">
+    <div class="divider"></div>
+    <div class="container-inner" style="margin-top: 100px;">
+      <div class="eyebrow reveal">Historical Data</div>
+      <h2 class="section-title reveal d-1">A decade of volatility.</h2>
+      <p class="section-sub reveal d-2">U.S. CPI (Consumer prices) from 2015–2024. Hover over any bar to see the
+        macroeconomic story of that year.</p>
+
+      <div class="glass-panel chart-container reveal d-3">
+        <div class="bars-wrapper" id="barWrapper">
+          <!-- Bars populated by JS -->
+        </div>
+        <div class="bar-labels" id="barLabels"></div>
+
+        <div class="hist-detail" id="histDetail">
+          <div class="hd-title" id="hdTitle"></div>
+          <div class="hd-body" id="hdBody"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAUSES -->
+  <section id="causes" class="container">
+    <div class="divider"></div>
+    <div class="container-inner" style="margin-top: 100px;">
+      <div class="eyebrow reveal">The Mechanics</div>
+      <h2 class="section-title reveal d-1">What fuels the fire?</h2>
+      <p class="section-sub reveal d-2">Inflation is driven by four primary macroeconomic forces. Expand each to
+        understand the mechanisms.</p>
+
+      <div class="causes-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section id="calculator" class="container">
+    <div class="divider"></div>
+    <div class="container-inner" style="margin-top: 100px;">
+      <div class="eyebrow reveal">Purchasing Power</div>
+      <h2 class="section-title reveal d-1">Run the numbers.</h2>
+      <p class="section-sub reveal d-2">See exactly what a specific dollar amount is worth across time boundaries.</p>
+
+      <div class="glass-panel calc-wrapper reveal d-3">
+        <div class="calc-toggles">
+          <div class="calc-tog active" data-dir="future">Future Value</div>
+          <div class="calc-tog" data-dir="past">Past Equivalent</div>
+        </div>
+
+        <div class="calc-inputs">
+          <div class="c-field">
+            <label>Amount ($)</label>
+            <input type="number" id="cAmount" value="10000" min="1">
+          </div>
+          <div class="c-field">
+            <label>Rate (%)</label>
+            <input type="number" id="cRate" value="3.5" step="0.1">
+          </div>
+          <div class="c-field">
+            <label>Years</label>
+            <input type="number" id="cYears" value="20" min="1">
+          </div>
+        </div>
+
+        <div class="calc-result-box">
+          <div class="cr-label" id="crLabel">Purchasing power needed in 20 years</div>
+          <div class="cr-val" id="crValue">$19,898</div>
+          <div class="cr-note" id="crNote">To buy what $10,000 buys today, you will need nearly double the cash.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Methodology</a>
+    </div>
+    <div class="footer-legal">
+      Copyright &copy; 2026 Apple-Inspired Explainer. Data sourced from U.S. BLS CPI metrics.<br>
+      This is a demonstration project for educational use only.
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================================================
+       SCROLL REVEAL OBSERVER
+       ========================================================================= */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+
+          // If it's the chart container, trigger bar growth
+          if (entry.target.classList.contains('chart-container')) {
+            setTimeout(animateBars, 300);
+          }
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* =========================================================================
+       SLIDER STYLING (Fill track logic)
+       ========================================================================= */
+    function updateSliderProgress(slider) {
+      const min = parseFloat(slider.min) || 0;
+      const max = parseFloat(slider.max) || 100;
+      const val = parseFloat(slider.value);
+      const percentage = ((val - min) / (max - min)) * 100;
+      slider.style.setProperty('--val', `${percentage}%`);
+    }
+    document.querySelectorAll('.apple-slider').forEach(slider => {
+      updateSliderProgress(slider);
+      slider.addEventListener('input', () => updateSliderProgress(slider));
+    });
+
+    /* =========================================================================
+       BASKET LOGIC
+       ========================================================================= */
+    const items = [
+      { icon: '🥛', name: 'Milk (Gallon)', price: 4.20 },
+      { icon: '🍞', name: 'Bread (Loaf)', price: 3.50 },
+      { icon: '🥚', name: 'Eggs (Dozen)', price: 3.80 },
+      { icon: '⛽', name: 'Gasoline (Gal)', price: 3.60 },
+      { icon: '☕', name: 'Premium Coffee', price: 5.50 },
+      { icon: '🍔', name: 'Fast Food Meal', price: 12.00 },
+      { icon: '💊', name: 'Aspirin', price: 8.00 },
+      { icon: '📡', name: 'Streaming /mo', price: 15.99 },
+      { icon: '🎬', name: 'Movie Ticket', price: 14.50 },
+      { icon: '👕', name: 'Cotton T-Shirt', price: 20.00 }
+    ];
+
+    const rSlider = document.getElementById('rateSlider');
+    const ySlider = document.getElementById('yearSlider');
+    const bGrid = document.getElementById('basketGrid');
+
+    /* =========================================================================
+       ANIMATED COUNTER UTILITY
+       ========================================================================= */
+    const _anims = new Map(); // element -> animation frame id
+
+    function animateCounter(el, toVal, formatter, duration = 550) {
+      // Cancel any in-flight animation on this element
+      if (_anims.has(el)) cancelAnimationFrame(_anims.get(el));
+
+      // Parse current displayed value (strip non-numeric except . and -)
+      const rawCurrent = el.dataset.rawVal !== undefined ? parseFloat(el.dataset.rawVal) : 0;
+      const fromVal = isNaN(rawCurrent) ? 0 : rawCurrent;
+      el.dataset.rawVal = toVal;
+
+      const startTime = performance.now();
+
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out quart
+        const eased = 1 - Math.pow(1 - progress, 4);
+        const current = fromVal + (toVal - fromVal) * eased;
+        el.textContent = formatter(current);
+        if (progress < 1) {
+          _anims.set(el, requestAnimationFrame(tick));
+        } else {
+          el.textContent = formatter(toVal);
+          _anims.delete(el);
+          // Trigger pop animation
+          el.classList.remove('num-changed');
+          void el.offsetWidth; // force reflow
+          el.classList.add('num-changed');
+        }
+      }
+      _anims.set(el, requestAnimationFrame(tick));
+    }
+
+    /* Basket initialisation flag */
+    let basketInitialised = false;
+
+    function renderBasket() {
+      const rate = parseFloat(rSlider.value) / 100;
+      const yrs = parseInt(ySlider.value);
+
+      document.getElementById('rateVal').innerText = rSlider.value + '%';
+      document.getElementById('yearVal').innerText = yrs + (yrs === 1 ? ' Year' : ' Years');
+
+      const mult = Math.pow(1 + rate, yrs);
+      let sumNow = 0, sumThen = 0;
+
+      if (!basketInitialised) {
+        /* ---- First render: build DOM ---- */
+        bGrid.innerHTML = items.map((item, idx) => {
+          const fut = item.price * mult;
+          const pct = ((fut - item.price) / item.price) * 100;
+          sumNow += item.price;
+          sumThen += fut;
+          let cls = 'fl', sign = '';
+          if (pct > 0.5) { cls = 'up'; sign = '+'; }
+          else if (pct < -0.5) { cls = 'dn'; }
+          return `
+        <div class="b-item">
+          <span class="b-icon">${item.icon}</span>
+          <div class="b-info">
+            <div class="b-name">${item.name}</div>
+            <div class="b-price" id="bp-${idx}" data-raw-val="${fut}">$${fut.toFixed(2)}</div>
+          </div>
+          <div class="b-badge ${cls}" id="bb-${idx}">${sign}${pct.toFixed(0)}%</div>
+        </div>`;
+        }).join('');
+        basketInitialised = true;
+      } else {
+        /* ---- Subsequent renders: update in place ---- */
+        items.forEach((item, idx) => {
+          const fut = item.price * mult;
+          const pct = ((fut - item.price) / item.price) * 100;
+          sumNow += item.price;
+          sumThen += fut;
+
+          const priceEl = document.getElementById('bp-' + idx);
+          const badgeEl = document.getElementById('bb-' + idx);
+
+          if (priceEl) animateCounter(priceEl, fut, v => '$' + v.toFixed(2));
+
+          if (badgeEl) {
+            let cls = 'fl', sign = '';
+            if (pct > 0.5) { cls = 'up'; sign = '+'; }
+            else if (pct < -0.5) { cls = 'dn'; }
+            badgeEl.className = 'b-badge ' + cls;
+            badgeEl.textContent = sign + pct.toFixed(0) + '%';
+          }
+        });
+      }
+
+      /* Stat cards */
+      const nowEl = document.getElementById('costNow');
+      const thenEl = document.getElementById('costThen');
+      const deltaEl = document.getElementById('costDelta');
+      const delta = sumThen - sumNow;
+
+      animateCounter(nowEl, sumNow, v => '$' + v.toFixed(2));
+      animateCounter(thenEl, sumThen, v => '$' + v.toFixed(2));
+      animateCounter(deltaEl, Math.abs(delta), v => (delta >= 0 ? '+$' : '-$') + v.toFixed(2));
+
+      document.getElementById('deltaLabel').innerText = delta >= 0 ? 'Increase' : 'Decrease';
+      deltaEl.className = 'sc-val ' + (delta > 0.1 ? 'red' : delta < -0.1 ? 'green' : '');
+    }
+
+    rSlider.addEventListener('input', renderBasket);
+    ySlider.addEventListener('input', renderBasket);
+    renderBasket();
+
+    /* =========================================================================
+       BAR CHART LOGIC
+       ========================================================================= */
+    const histData = [
+      { y: 2015, r: 0.1, n: 'Oil prices collapsed, dragging inflation near zero. Energy costs fell dramatically giving consumers relief at the pump.' },
+      { y: 2016, r: 1.3, n: 'A modest recovery in energy prices lifted inflation slightly off its near-zero floor.' },
+      { y: 2017, r: 2.1, n: 'Inflation returned to the Fed\'s 2% target — a goldilocks moment of steady economic expansion.' },
+      { y: 2018, r: 2.4, n: 'Tax cuts and import tariffs created mild upward price pressure across goods.' },
+      { y: 2019, r: 1.8, n: 'Trade tensions and a global slowdown cooled inflation slightly below target.' },
+      { y: 2020, r: 1.2, n: 'COVID-19 crushed demand early. But supply chain fractures were already forming beneath the surface.' },
+      { y: 2021, r: 4.7, n: 'Trillions in stimulus + broken supply chains = demand wildly outpacing supply.' },
+      { y: 2022, r: 8.0, n: 'The highest inflation in 40 years. Russia\'s invasion of Ukraine spiked global energy and food costs.' },
+      { y: 2023, r: 4.1, n: 'Aggressive Fed rate hikes began cooling prices, though shelter and services stayed stubbornly elevated.' },
+      { y: 2024, r: 2.9, n: 'A continued descent toward target. The labor market held firm, keeping services inflation persistent.' }
+    ];
+
+    const maxR = 8.5; // Fixed scale ceiling
+    const wrapper = document.getElementById('barWrapper');
+    const lbls = document.getElementById('barLabels');
+
+    function initBars() {
+      wrapper.innerHTML = histData.map((d, i) => {
+        let tCls = d.r < 2 ? 'low' : d.r < 4.5 ? 'mid' : 'high';
+        // Initial height is 0, animated in via animateBars
+        return `
+      <div class="bar-col" onmouseenter="showDetail(${i})">
+        <div class="bar-track ${tCls}" data-target-h="${(d.r / maxR) * 100}%" style="--h: ${(d.r / maxR) * 100}%">
+          <div class="bar-popup">${d.r}%</div>
+        </div>
+      </div>
+    `;
+      }).join('');
+      lbls.innerHTML = histData.map(d => `<span>'${d.y.toString().slice(2)}</span>`).join('');
+    }
+
+    function animateBars() {
+      document.querySelectorAll('.bar-track').forEach(track => {
+        track.style.height = track.getAttribute('data-target-h');
+      });
+    }
+
+    function showDetail(i) {
+      const d = histData[i];
+      const box = document.getElementById('histDetail');
+      document.getElementById('hdTitle').innerText = `${d.y} — ${d.r}% CPI`;
+      document.getElementById('hdBody').innerText = d.n;
+      box.classList.add('on');
+    }
+
+    initBars();
+
+    /* =========================================================================
+       CAUSES LOGIC
+       ========================================================================= */
+    const causesData = [
+      { i: '📈', t: 'Demand-Pull', b: 'Occurs when consumer demand rapidly outpaces the available supply of goods and services. Often triggered by stimulus checks, low interest rates, or sudden economic booms.' },
+      { i: '💸', t: 'Cost-Push', b: 'Happens when the cost of production (materials, energy, wages) rises. Companies are forced to pass these higher operating costs directly to the consumer to maintain margins.' },
+      { i: '🖨️', t: 'Money Supply', b: 'If a central bank prints money faster than the economy creates value, the currency loses purchasing power. Simply put: more dollars chasing the same amount of goods.' },
+      { i: '🧠', t: 'Expectations', b: 'A psychological feedback loop. If people expect prices to rise, workers demand higher wages. To pay those wages, businesses raise prices. A self-fulfilling prophecy.' }
+    ];
+
+    let actCc = null;
+    const ccGrid = document.querySelector('.causes-grid');
+    ccGrid.innerHTML = causesData.map((c, i) => `
+  <div class="cause-card reveal d-${i + 1}" onclick="togCc(${i})" id="cc-${i}">
+    <div class="cc-icon">${c.i}</div>
+    <div class="cc-title">${c.t} <span class="cc-chevron">↓</span></div>
+    <div class="cc-body">${c.b}</div>
+  </div>
+`).join('');
+
+    // Re-observe the newly injected cause cards
+    document.querySelectorAll('.causes-grid .reveal').forEach(el => observer.observe(el));
+
+    function togCc(i) {
+      if (actCc !== null && actCc !== i) document.getElementById('cc-' + actCc).classList.remove('active');
+      const card = document.getElementById('cc-' + i);
+      card.classList.toggle('active');
+      actCc = card.classList.contains('active') ? i : null;
+    }
+
+    /* =========================================================================
+       CALCULATOR LOGIC
+       ========================================================================= */
+    let cMode = 'future';
+    const cTogs = document.querySelectorAll('.calc-tog');
+    cTogs.forEach(t => {
+      t.addEventListener('click', () => {
+        cTogs.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        cMode = t.getAttribute('data-dir');
+        runCalc();
+      });
+    });
+
+    const iAmt = document.getElementById('cAmount');
+    const iRate = document.getElementById('cRate');
+    const iYrs = document.getElementById('cYears');
+
+    const crValEl = document.getElementById('crValue');
+
+    function adaptCalcFontSize(text) {
+      // Shrink font progressively as the string gets longer
+      const len = text.length;
+      let size;
+      if (len <= 10) size = 'clamp(48px, 7vw, 96px)';
+      else if (len <= 14) size = 'clamp(36px, 5.5vw, 76px)';
+      else if (len <= 18) size = 'clamp(28px, 4.5vw, 60px)';
+      else if (len <= 22) size = 'clamp(22px, 3.5vw, 48px)';
+      else size = 'clamp(18px, 2.8vw, 38px)';
+      crValEl.style.fontSize = size;
+    }
+
+    function runCalc() {
+      const amt = parseFloat(iAmt.value) || 0;
+      const rate = parseFloat(iRate.value) / 100 || 0;
+      const yrs = parseInt(iYrs.value) || 1;
+
+      const fmt = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+
+      let res, lbl, notex;
+      if (cMode === 'future') {
+        res = amt * Math.pow(1 + rate, yrs);
+        lbl = `Required in ${yrs} Year${yrs === 1 ? '' : 's'}`;
+        notex = `To buy what ${fmt(amt)} gets you today, you'll need ${fmt(res)} in ${yrs} year${yrs === 1 ? '' : 's'} at ${iRate.value}% annual inflation.`;
+      } else {
+        res = amt / Math.pow(1 + rate, yrs);
+        lbl = `Value ${yrs} Year${yrs === 1 ? '' : 's'} Ago`;
+        notex = `A price tag of ${fmt(amt)} today was the equivalent of spending just ${fmt(res)} exactly ${yrs} year${yrs === 1 ? '' : 's'} ago.`;
+      }
+
+      document.getElementById('crLabel').innerText = lbl;
+      document.getElementById('crNote').innerText = notex;
+
+      // Animate the result counter
+      const rawPrev = parseFloat(crValEl.dataset.rawVal) || 0;
+      adaptCalcFontSize(fmt(res)); // pre-adapt before animation completes
+      animateCounter(crValEl, res, v => fmt(v), 700);
+    }
+
+    [iAmt, iRate, iYrs].forEach(el => el.addEventListener('input', runCalc));
+    runCalc();
+
+  </script>
+</body>
+
+</html>
